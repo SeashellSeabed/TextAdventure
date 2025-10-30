@@ -8,7 +8,7 @@ public class TextAdventure
 
   public TextAdventure()
   {
-    console = new FancyConsole("Great Text Adventure!", 600, 600);
+    console = new FancyConsole("Great Text Adventure!", 1600, 1000);
     inScanner = new Scanner(System.in);
 
     // feel free to change the player's starting values
