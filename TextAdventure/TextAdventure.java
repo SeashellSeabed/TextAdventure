@@ -5,6 +5,12 @@ public class TextAdventure
   FancyConsole console;
   Scanner inScanner;
   Player ourHero;
+  boolean armor = false;
+  boolean sword = false;
+  boolean dagger = false;
+  boolean servant = false;
+  boolean cutlass = false;
+  boolean mageApprentice = false;
 
   public TextAdventure()
   {
@@ -12,7 +18,7 @@ public class TextAdventure
     inScanner = new Scanner(System.in);
 
     // feel free to change the player's starting values
-    ourHero = new Player("Bob", 100, 0);
+    ourHero = new Player("Player", 100, 0, 0.0, "none");
   }
 
   public void play()
@@ -31,7 +37,8 @@ public class TextAdventure
     while(input != "fight" || input != "give up") {
     if(input .equalsIgnoreCase("fight"))
     {
-      enterZone1();
+      enterZoneSwim();
+      return;
     }else if(input.equalsIgnoreCase("give up")){
       System.out.println("You go limp. You wanted it this way, and you shal have it. Water floods through your mouth and nose, leaving an excruciating burning sensation in your lungs as you involuntarily gasp for air. \nIt's faster then you expected. Maybe your death if you continued... would've been far, far more brutal.\nYou have died.\n");
       gameEnd();
@@ -45,22 +52,53 @@ public class TextAdventure
     }
   }
 
-  private void enterZone1()
+  private void enterZoneSwim()
   {
-    // change image
+    String input;
+    console.setImage("island.jpg");
     // ADD CODE HERE
-    System.out.println("A sudden, almost unexplainable strength festers within you. You reach out to grasp at the water, thrusting it backwards all while kicking your legs as hard as you physically can.\nAll in the sake of making it towards that light. You can feel your arms wailing in pain and your legs cramping up, but nothing your body tells you overpowers your will to live. \nYou break through the light, almost getting blinded by the hot rays of the sun. Your eyes take a moment to adjust, but you see that you're in a large body of water. Looking around, you see one landmass that you're confident you'll be able to swim to. \n >[swim] to swim to the island \n>[stay] to see if anything will pick you up.");
-
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
-
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
-
+    System.out.println("A sudden, almost unexplainable strength festers within you. You reach out to grasp at the water, thrusting it backwards all while kicking your legs as hard as you physically can.\nAll in the sake of making it towards that light. You can feel your arms wailing in pain and your legs cramping up, but nothing your body tells you overpowers your will to live. \nYou break through the light, almost getting blinded by the hot rays of the sun. Your eyes take a moment to adjust, but you see that you're in a large body of water. Looking around, you see one landmass that you're confident you'll be able to swim to. \n >[swim] to swim to the island \n>[stay] to see if anything will pick you up.\n");
+    input = inScanner.nextLine();
+    while(input != "swim" || input != "stay") {
+    if(input.equalsIgnoreCase("swim"))
+    {
+      enterZoneIsland();
+      return;
+  }else if(input.equalsIgnoreCase("stay")){
+    enterZoneStay();
+    return;
+  }else{
+    
+    System.out.println("Invalid choice. Please type 'swim' or 'stay' : ");
+    input = inScanner.nextLine();}
+}
   }
 
-  private void enterZone2()
+  private void enterZoneIsland()
+  {
+    // change image
+    console.setImage("wolf.jpg");
+
+    String input;
+    System.out.println("You begin your great swim towards the island. Compared to drawing out all of your might to survive the depths of the ocean, it was leasurely. \nYou reach the shore without any issue, glancing around the island. There is nothing of interest, not even a stick to help your exhausted body move along. And yet, you do. \n Beyond the beach was forest. Nothing but forest. You don't know how long you walk before finally coming across something just beyond a bush in front of you. A wolf. It doesn't see you.\n >[sneak] to try and sneak past the wolf\n >[attack] to try and attack the wolf. : \n");
+    input = inScanner.nextLine();
+    while(input != "sneak" || input != "attack") {
+    if(input.equalsIgnoreCase("sneak")){
+      enterZoneCrossroads();
+      return;
+    }else if(input.equalsIgnoreCase("attack")){
+      System.out.println("You let out a bloodthirsty scream, jumping towards the wolf. However, you are severely weakened to even consider fighting, let alone fighting a wild wolf. \n You're turned into a play-toy for the wolf as it mauls you to death, ripping through your flesh with it's sharp teeth and claws. You lose all feeling in your body, and the last thing you can hear is your flesh being torn into and eaten by this wolf. \nYou have died.\n");
+      gameEnd();
+      return;
+  }else{
+    
+    System.out.println("Invalid choice. Please type [sneak] or [attack]\n");
+    input = inScanner.nextLine();
+  }
+}
+}
+
+  private void enterZoneStay()
   {
     // change image
     // ADD CODE HERE
@@ -74,7 +112,33 @@ public class TextAdventure
     
   }
 
-  private void enterZone3()
+  private void enterZoneCrossroads()
+  {
+    // change image
+    console.setImage("cave.jpg");
+
+    String input;
+    System.out.println("You carefully sneak past the wolf, ensuring that it doesn't even think about looking at you. Before you even pass by it, you hear a howl. The wolf sprints towards that direction, letting you breathe much needed sigh of relief, continuing onwards. \nYou discover a path in the dense forest which suggests that this landmass isn't uninhabited. You don't even know how big it is.\nFollowing the path, you come across a crossroad. One way leads to somewhere that had smoke just above it, presumably a town. The other, much more decrepit path, leads to a cave.\n >[town] to go to the town\n >[cave] to go to the cave\n");
+    input = inScanner.nextLine();
+    while(input != "town" || input != "cave") {
+    if(input.equalsIgnoreCase("town"))
+    {
+      enterZoneTown();
+      return;
+    }else if(input.equalsIgnoreCase("cave")){
+      enterZoneCave();
+      return;
+    }else{
+      
+      System.out.println("Invalid choice. Please type [town] or [cave] : ");
+      input = inScanner.nextLine();
+    }
+
+    
+  }
+}
+
+  private void enterZoneTown()
   {
     // change image
     // ADD CODE HERE
@@ -88,35 +152,7 @@ public class TextAdventure
     
   }
 
-  private void enterZone4()
-  {
-    // change image
-    // ADD CODE HERE
-
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
-
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
-    
-  }
-
-  private void enterZone5()
-  {
-    // change image
-    // ADD CODE HERE
-
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
-
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
-    
-  }
-
-  private void enterZone6()
+  private void enterZoneCave()
   {
     // change image
     // ADD CODE HERE

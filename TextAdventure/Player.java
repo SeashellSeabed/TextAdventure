@@ -6,10 +6,16 @@ public class Player
   int health;
   double gold;
   int monstersDefeated;
+  double damage;
+  String playerClass;
 
-  public Player(String playerName, int startingHealth, double startingGold)
+  public Player(String playerName, int startingHealth, double startingGold, double damage, String playerClass)
   {
-    // ADD CODE HERE
+    name = playerName;
+    health = startingHealth;
+    gold = startingGold;
+    monstersDefeated = 0;
+    
   }
 
   public String getName()
@@ -50,5 +56,17 @@ public class Player
   public void defeatMonster()
   {
     monstersDefeated = monstersDefeated + 1;
+  }
+  public double getDamage()
+  {
+    return damage;
+  }
+  public void enemy(double enemyHealth, double enemyDamage, String enemyClass)
+  {
+  
+  }
+  public String setClass(String playerClass)
+  {
+    return playerClass;
   }
 }
