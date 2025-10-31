@@ -40,7 +40,7 @@ public class TextAdventure
       enterZoneSwim();
       return;
     }else if(input.equalsIgnoreCase("give up")){
-      System.out.println("You go limp. You wanted it this way, and you shal have it. Water floods through your mouth and nose, leaving an excruciating burning sensation in your lungs as you involuntarily gasp for air. \nIt's faster then you expected. Maybe your death if you continued... would've been far, far more brutal.\nYou have died.\n");
+      System.out.println("You go limp. You wanted it this way, and you shall have it. Water floods through your mouth and nose, leaving an excruciating burning sensation in your lungs as you involuntarily gasp for air. \nIt's faster then you expected. Maybe your death if you continued would've been far, far more brutal.\nYou have died.\n");
       gameEnd();
       return;
     }else{
@@ -100,16 +100,12 @@ public class TextAdventure
 
   private void enterZoneStay()
   {
-    // change image
-    // ADD CODE HERE
+    console.setImage("pirate.jpg");
 
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
+    String input;
 
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
-    
+    System.out.println("You've been floating for what felt like days, but the sun above you made it obvious that night hadn't even set yet.\nWhen you first emerged from the water, the sun was at it's zenith beating it's rays down upon you, but now, it has since grown closer and closer to the horizon, turning the sky a beautiful orange-white color\n. As you gaze upon the setting sun, a shillouette catches your eye. One of a ship, sails unfurled, growing larger second by second. After a couple minutes, the behemoth is upon you.\n...\nYou were taken below deck into the stomach of the monster and given clothes by some strange-looking men. Dirty, sure, but not torn up and soaked like whatever you had on before. As you emerge from the below-deck area, something makes your stomach drop; a jolly rodger flying above the ship. These men were pirates.\nDue to sheer councidence or them noticing the look of horror on your face, you're suddenly surrounded. Guns, Swords and hooks pointed in your direction. They were about to kill you, but one massive peg-legged man who stood about twice your height had everyone stand down with a simple command. \n'Cease.' His voice was deep and had it's own aura that made even the sweat on your brow stop in it's tracks. 'We give him a choice.' \nHe took out two items. One blunderbuss flintlock, and one cutlass.\n 'I am captain Brandley, captain of this ship. I hold two options for you. You either take one of these weapons and join us, or... you see what comes next.'\n[Cutlass] to take the Cutlass.\n[Blunderbuss] to take the Blunderbuss\n[Resist] to pick neither.");
+  input = inScanner.nextLine();    
   }
 
   private void enterZoneCrossroads()
