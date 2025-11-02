@@ -7,15 +7,18 @@ public class Player
   double gold;
   int monstersDefeated;
   double damage;
+  double defense;
   String playerClass;
 
-  public Player(String playerName, int startingHealth, double startingGold, double damage, String playerClass)
+  public Player(String playerName, int startingHealth, double startingGold, double playerDamage, double playerDefense, String currentPlayerClass)
   {
     name = playerName;
     health = startingHealth;
     gold = startingGold;
     monstersDefeated = 0;
-    
+    damage = playerDamage;
+    defense = playerDefense;
+    playerClass = currentPlayerClass;
   }
 
   public String getName()
@@ -65,8 +68,21 @@ public class Player
   {
   
   }
-  public String setClass(String playerClass)
+  public String getClass(String TplayerClass)
   {
     return playerClass;
   }
+  public void setClass(String newClass)
+  {
+    playerClass = newClass;
+  }
+  public double getDefense()
+  {
+    return defense;
+  }
+  public void setDefense(double newDefense)
+  {
+    defense = newDefense;
+  }
+  
 }

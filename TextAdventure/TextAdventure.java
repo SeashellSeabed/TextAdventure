@@ -11,6 +11,8 @@ public class TextAdventure
   boolean servant = false;
   boolean cutlass = false;
   boolean mageApprentice = false;
+  boolean blunderbuss = false;
+  boolean apostle = false;
 
   public TextAdventure()
   {
@@ -18,7 +20,7 @@ public class TextAdventure
     inScanner = new Scanner(System.in);
 
     // feel free to change the player's starting values
-    ourHero = new Player("Player", 100, 0, 0.0, "none");
+    ourHero = new Player("Player", 100, 0, 2, 0, "none");
   }
 
   public void play()
@@ -40,7 +42,7 @@ public class TextAdventure
       enterZoneSwim();
       return;
     }else if(input.equalsIgnoreCase("give up")){
-      System.out.println("You go limp. You wanted it this way, and you shall have it. Water floods through your mouth and nose, leaving an excruciating burning sensation in your lungs as you involuntarily gasp for air. \nIt's faster then you expected. Maybe your death if you continued would've been far, far more brutal.\nYou have died.\n");
+      System.out.println("You go limp. You wanted it this way, and you shal have it. Water floods through your mouth and nose, leaving an excruciating burning sensation in your lungs as you involuntarily gasp for air. \nIt's faster then you expected. Maybe your death if you continued... would've been far, far more brutal.\nYou have died.\n");
       gameEnd();
       return;
     }else{
@@ -100,14 +102,33 @@ public class TextAdventure
 
   private void enterZoneStay()
   {
+    
     console.setImage("pirate.jpg");
-
     String input;
-
-    System.out.println("You've been floating for what felt like days, but the sun above you made it obvious that night hadn't even set yet.\nWhen you first emerged from the water, the sun was at it's zenith beating it's rays down upon you, but now, it has since grown closer and closer to the horizon, turning the sky a beautiful orange-white color\n. As you gaze upon the setting sun, a shillouette catches your eye. One of a ship, sails unfurled, growing larger second by second. After a couple minutes, the behemoth is upon you.\n...\nYou were taken below deck into the stomach of the monster and given clothes by some strange-looking men. Dirty, sure, but not torn up and soaked like whatever you had on before. As you emerge from the below-deck area, something makes your stomach drop; a jolly rodger flying above the ship. These men were pirates.\nDue to sheer councidence or them noticing the look of horror on your face, you're suddenly surrounded. Guns, Swords and hooks pointed in your direction. They were about to kill you, but one massive peg-legged man who stood about twice your height had everyone stand down with a simple command. \n'Cease.' His voice was deep and had it's own aura that made even the sweat on your brow stop in it's tracks. 'We give him a choice.' \nHe took out two items. One blunderbuss flintlock, and one cutlass.\n 'I am captain Brandley, captain of this ship. I hold two options for you. You either take one of these weapons and join us, or... you see what comes next.'\n[Cutlass] to take the Cutlass.\n[Blunderbuss] to take the Blunderbuss\n[Resist] to pick neither.");
-  input = inScanner.nextLine();    
+    System.out.println("You float around for what seems like ages, long enough to the point where the sun, which had been practically beating down upon you whilst at it's zenith, had began to set beyond the watery horizon. \n Thankfully, you are fortunate enough to see a boat, and wave it over. It appears to notice you, as you hear the distant sounds of men heaving sails and the colossal ship  turning towards you. \n You are pulled aboard the ship, and given food and dry clothes. That is the last of your fortunates, as you glance upwards and see a Jolly Rodger flying on the mast. Pirates. \n Before you know it, cutlasses are pointed at your throat while the men on board heckle you with insults and threats to your life. However, they are all silenced as a huge man with a peg-leg comes walking, holding two weapons. One blunderbuss, and one cutlass. \n``I will not ask how you got to the point you are now, that is not important to me.`` THe man puts both weapons down on the ground, glaring at you. ``You will pick one, and you will become one of us. Or die.``\n >[cutlass] to pick the cutlass\n >[blunderbuss] to pick the blunderbuss\n [refuse] to refuse both.\n");
+    input = inScanner.nextLine();
+    while(input != "cutlass" || input != "blunderbuss" || input != "refuse") {
+    if(input.equalsIgnoreCase("cutlass"))
+    {
+      cutlass = true;
+      enterZoneCrossroads();
+      return;
+    }else if(input.equalsIgnoreCase("blunderbuss")){
+      ourHero.setClass("blunderbuss");
+      enterZoneCrossroads();
+      return;
+    }else if(input.equalsIgnoreCase("refuse")){
+      System.out.println("You refuse both weapons. The pirate captain narrows his eyes at you, before signaling to his crew. \n Before you can react, a blade is plunged into your stomach, and everything goes black as you collapse onto the deck of the ship. \nYou have died.\n");
+      gameEnd();
+      return;
+    }else{
+      
+      System.out.println("Invalid choice. Please type [cutlass], [blunderbuss], or [refuse] : ");
+      input = inScanner.nextLine();
+    }
+    
   }
-
+}
   private void enterZoneCrossroads()
   {
     // change image
@@ -136,17 +157,29 @@ public class TextAdventure
 
   private void enterZoneTown()
   {
-    // change image
-    // ADD CODE HERE
-
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
-
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
+    console.setImage("town.jpg");
     
+    System.out.println("The path towards the smoke was well-used. It had track-marks from what was presumably carts and carriages, and footprints practically all over. Sure enough, after enough walking, a town comes into view. \nAs you begin to walk into the town, you're stopped by a border guard. He doesn't say anything to you, instead he roughly pats you down on your sides. After concluding that you are of no threat, he steps aside and signals for the town gate to open.\nThe interior was pleasent, definitely a higher-class neighborhood for the time. What would you like to do?\n [shop] go to the shop\n [tavern] go to the tavern\n [beg] beg for money on the streets\n");
+    
+    String input = inScanner.nextLine();
+    while(input != "shop" || input != "tavern" || input != "beg") {
+    if(input.equalsIgnoreCase("shop"))
+    {
+      enterShop();
+      return;
+  }else if(input.equalsIgnoreCase("tavern")){
+    enterTavern();
+    return;
+  }else if(input.equalsIgnoreCase("beg")){
+      enterBegging();
+      return;
+  }else{
+    
+    System.out.println("Invalid choice. Please type [shop], [tavern], or [beg] : ");
+    input = inScanner.nextLine();
+    }
   }
+}
 
   private void enterZoneCave()
   {
@@ -162,6 +195,16 @@ public class TextAdventure
     
   }
 
+  private void enterTavern(){
+  }
+
+  private void enterShop(){
+
+  }
+
+  private void enterBegging(){
+
+  }
   private void gameEnd()
   {
     // ADD CODE HERE
