@@ -27,7 +27,7 @@ public class TextAdventure
   public void play() //I won't be adding like, nearly as many comments here compared to the battle.java class because this is just a lot of the same thing over and over again, calling other classes and whatnot. I don't need reminders because of how frequently I need to run by this and adding all those comments would take too much time I could spend working. - SeashellSeabed (K)
   {
     String input;
-    // start of adventure. You can change this if you like
+    
     console.setImage("ocean.jpg");
 
     System.out.println("Input your name to begin the game.");
@@ -113,11 +113,11 @@ public class TextAdventure
     if(input.equalsIgnoreCase("cutlass"))
     {
       cutlass = true;
-      enterZoneCrossroads();
+      //unfinished
       return;
     }else if(input.equalsIgnoreCase("blunderbuss")){
       ourHero.setClass("blunderbuss");
-      enterZoneCrossroads();
+      //unfinished
       return;
     }else if(input.equalsIgnoreCase("refuse")){
       System.out.println("You refuse both weapons. The pirate captain narrows his eyes at you, before signaling to his crew. \n Before you can react, a blade is plunged into your stomach, and everything goes black as you collapse onto the deck of the ship. \nYou have died.\n");
@@ -135,7 +135,7 @@ public class TextAdventure
   {
     // change image
     console.setImage("cave.jpg");
-
+    
     String input;
     System.out.println("You carefully sneak past the wolf, ensuring that it doesn't even think about looking at you. Before you even pass by it, you hear a howl. The wolf sprints towards that direction, letting you breathe much needed sigh of relief, continuing onwards. \nYou discover a path in the dense forest which suggests that this landmass isn't uninhabited. You don't even know how big it is.\nFollowing the path, you come across a crossroad. One way leads to somewhere that had smoke just above it, presumably a town. The other, much more decrepit path, leads to a cave.\n >[town] to go to the town\n >[cave] to go to the cave\n");
     input = inScanner.nextLine();
@@ -145,16 +145,9 @@ public class TextAdventure
       enterZoneTown();
       return;
     }else if(input.equalsIgnoreCase("cave")){
-      if(goneToCave == false){
         enterZoneCave();
-        goneToCave = true;
+        return;
       }else{
-        System.out.println("You have already been to the cave. Turns out, it has collapsed behind you. There is no other route for you, so you go to the town anyways.\n");
-        enterZoneTown();
-      }
-      
-      return;
-    }else{
       
       System.out.println("Invalid choice. Please type [town] or [cave] : ");
       input = inScanner.nextLine();
@@ -167,10 +160,10 @@ public class TextAdventure
   private void enterZoneTown()
   {
     console.setImage("town.jpg");
-    
+    String input;
     System.out.println("The path towards the smoke was well-used. It had track-marks from what was presumably carts and carriages, and footprints practically all over. Sure enough, after enough walking, a town comes into view. \nAs you begin to walk into the town, you're stopped by a border guard. He doesn't say anything to you, instead he roughly pats you down on your sides. After concluding that you are of no threat, he steps aside and signals for the town gate to open.\nThe interior was pleasent, definitely a higher-class neighborhood for the time. What would you like to do?\n [shop] go to the shop\n [tavern] go to the tavern\n [beg] beg for money on the streets\n");
     
-    String input = inScanner.nextLine();
+    input = inScanner.nextLine();
     while(input != "shop" || input != "tavern" || input != "beg") {
     if(input.equalsIgnoreCase("shop"))
     {
@@ -192,7 +185,7 @@ public class TextAdventure
 
   private void enterZoneCave()
   {
-    console.setImage("caveInside.jpg");
+    console.setImage("wolf.jpg");
 
     
 
@@ -210,8 +203,8 @@ public class TextAdventure
       return;
   
      }else if(input.equalsIgnoreCase("leave")){
-      System.out.println("You decide that whatever was in that cave wasn't worth your time, and head back to the crossroads.\n");
-      enterZoneCrossroads();
+      System.out.println("You decide that whatever was in that cave wasn't worth your time, and head back to the crossroads, and to the town you saw earlier.\n");
+      enterZoneTown();
       return;
   }else{
     
