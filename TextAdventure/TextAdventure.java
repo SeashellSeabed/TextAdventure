@@ -144,10 +144,14 @@ public class TextAdventure
     {
       enterZoneTown();
       return;
-    }else if(input.equalsIgnoreCase("cave")){
+    }else if(input.equalsIgnoreCase("cave") && goneToCave == false){
+        goneToCave = true;
         enterZoneCave();
         return;
-      }else{
+      }else if(input.equalsIgnoreCase("cave") && goneToCave == true){
+        System.out.println("The cave has collapsed behind you. You cannot go to the cave.\nThe [town] is the only thing left for you.");
+        input = inScanner.nextLine();
+      }
       
       System.out.println("Invalid choice. Please type [town] or [cave] : ");
       input = inScanner.nextLine();
@@ -155,7 +159,7 @@ public class TextAdventure
 
     
   }
-}
+
 
   private void enterZoneTown()
   {
@@ -185,7 +189,7 @@ public class TextAdventure
 
   private void enterZoneCave()
   {
-    console.setImage("wolf.jpg");
+    console.setImage("caveInside.jpg");
 
     
 
