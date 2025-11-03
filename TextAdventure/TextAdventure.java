@@ -13,6 +13,7 @@ public class TextAdventure
   boolean mageApprentice = false;
   boolean blunderbuss = false;
   boolean apostle = false;
+  boolean goneToCave = false;
 
   public TextAdventure()
   {
@@ -23,14 +24,15 @@ public class TextAdventure
     ourHero = new Player("Player", 100, 0, 2, 0, "none");
   }
 
-  public void play()
+  public void play() //I won't be adding like, nearly as many comments here compared to the battle.java class because this is just a lot of the same thing over and over again, calling other classes and whatnot. I don't need reminders because of how frequently I need to run by this and adding all those comments would take too much time I could spend working. - SeashellSeabed (K)
   {
     String input;
     // start of adventure. You can change this if you like
     console.setImage("ocean.jpg");
 
-    // Change ourHero's name
-    // ADD CODE HERE
+    System.out.println("Input your name to begin the game.");
+    input = inScanner.nextLine();
+    ourHero.changeName(input);
     
     // describe the starting situation. Feel free to change this
     System.out.println("Falling. Drifting. It feels like the hands of death grip onto your shoulders, dragging you further and further down to the one and only truth of this world; death. \nThe deceptive comfort of the embrace of fate is interrupted with the overwhelming of water gushing into your nasal cavity. \n Your eyes jolt open despite the discomfort of the sensation caused by water running on your eyes, negligable as you rush up and pinch your nose shut. \n You're falling deeper and deeper into a body of water, the bottom so out of sight that the water around you gradients from blue to black. You can't see anything, not one lifeform or distinguishable structure, even with your impaired vision.\nYou haven't fallen far. You can still see light above you... or is it below you? To the side? You don't remember how you fell in, but more importantly, which direction you fell in from. \nYou're broken from your thoughts as water floods your slightly agape mouth, flowing down your throat as a cruel reminder of how much time you have left. \nThere is only two options for you. Do you gain the vigor to fight towards the light, or do you let death claim it's prize?\n >[fight] in order to swim\n >[give up] to float down to your demise.\n");
@@ -143,7 +145,14 @@ public class TextAdventure
       enterZoneTown();
       return;
     }else if(input.equalsIgnoreCase("cave")){
-      enterZoneCave();
+      if(goneToCave == false){
+        enterZoneCave();
+        goneToCave = true;
+      }else{
+        System.out.println("You have already been to the cave. Turns out, it has collapsed behind you. There is no other route for you, so you go to the town anyways.\n");
+        enterZoneTown();
+      }
+      
       return;
     }else{
       
@@ -183,19 +192,61 @@ public class TextAdventure
 
   private void enterZoneCave()
   {
-    // change image
-    // ADD CODE HERE
+    console.setImage("caveInside.jpg");
 
-    // describe the area/situation to the user. 
-    // Give them options for choices.
-    // ADD CODE HERE
-
-    // Take action or go to another zone based on their choice
-    // ADD CODE HERE
     
+
+    System.out.println("You venture into the cave, the darkness enveloping you as you make your way deeper and deeper. You begin to wonder if it was worth traveling to a place like this, but before you decide to turn back, there's a light ahead.\nThe lights continued deeper into the caves, you can't tell how long you've been in the system. Eventually, you're lead into this massive room with rocks that illuminate the place, even dimmly.\nInside the room was a single statue, a statue that... felt right to get closer to. It was beckoning you, whatever man was embodied into the art looked so, so friendly... but the 50 gold on the pedistal looked real friendly, too!\n [approach] to approach the statue\n [rob] to take the gold on the statue\n [Leave] to go back to the crossroads.\n");
+    String input = inScanner.nextLine();
+    while(input != "approach" || input != "rob" || input != "leave") {
+    if(input.equalsIgnoreCase("approach")){
+      
+      enterStatueOffer();
+      return;
+    }else if(input.equalsIgnoreCase("rob")){
+      System.out.println("You quickly snatch the gold from the pedistal, ignoring the statue completely Fortunately, nothing happens as you go out the way you came. You emerge from the cave a little richer.\n");
+      ourHero.setGold(ourHero.getGold() + 50);
+      enterZoneCrossroads();
+      return;
+  
+     }else if(input.equalsIgnoreCase("leave")){
+      System.out.println("You decide that whatever was in that cave wasn't worth your time, and head back to the crossroads.\n");
+      enterZoneCrossroads();
+      return;
+  }else{
+    
+    System.out.println("Invalid choice. Please type [approach], [rob], or [leave] : ");
+    input = inScanner.nextLine();
+    }
   }
+}
+
+
 
   private void enterTavern(){
+    console.setImage("tavern.jpg");
+    String input;
+    System.out.println("You enter the tavern, the smell of ale and roasted meat filling your nostrils. The tavern is bustling with patrons, some engaged in lively conversations while others are focused on their drinks. The barkeep eyes you as you walk in, waiting to see if you'll order something. He doesn't look particularly friendly.. but not too unfriendly, either. He's just there to do his job. You respect that.\n What would you like to do?\n [order] to order a drink or food\n [talk] to talk to the patrons\n [leave] to leave the tavern\n");
+    input = inScanner.nextLine();
+    while(input != "order" || input != "talk" || input != "leave") {
+    if(input.equalsIgnoreCase("order")){
+      System.out.println("You approach the bar and order a drink. The barkeep serves you a mug of ale. When you offer to pay for it, he turns you down.\n 'Just put it on your tab. I get the feeling you'll come back here.'\n Strange, but you continue to look around the tavern.\n");
+      enterTavern();
+      return;
+  }else if(input.equalsIgnoreCase("talk")){
+    enterZonePatron();
+    
+    return;
+  }else if(input.equalsIgnoreCase("leave")){
+      System.out.println("You decide to leave the tavern and head back to the town square.\n");
+      enterZoneTown();
+      return;
+  }else{
+    
+    System.out.println("Invalid choice. Please type [order], [talk], or [leave] : ");
+    input = inScanner.nextLine();
+  }
+}
   }
 
   private void enterShop(){
@@ -204,6 +255,43 @@ public class TextAdventure
 
   private void enterBegging(){
 
+  }
+
+  private void enterStatueOffer(){
+    System.out.println("You approach the statue, feeling a strange warmth as you get closer. But that turns into a damp jolt of cold down your spine as a long laugh erupts around the room the moment you make content.\n ``Oh, how so long! How so long i've waited for someone, someone like you! Someone who nobody would see missing... You will be my apostle, apostle I say! You'll do as I bid and act as I please! Give yourself up now, traveller! \n[resist] to resist the statue's power\n[accept] dawn the statue's will as your own.\n");
+    {
+      String input;
+      input = inScanner.nextLine();
+      while(input != "resist" || input != "accept") {
+      if(input.equalsIgnoreCase("resist")){
+        System.out.println("Your resistance proves worthless in the face of whatever was inside of that statue. The moment you falter even a little, your mind goes black. You wake up outside of the cave, feeling a new purpose. A new strength. You are now an apostle of the statue.\n");
+        ourHero.setClass("Apostle");
+        ourHero.setHealth(ourHero.getHealth() + 20);
+        ourHero.setDamage(ourHero.getDamage() + 5);
+        ourHero.setDefense(ourHero.getDefense() + 2);
+        System.out.println("Your stats have increased! Health +20, Damage +5, Defense +2, New class: Apostle.\n");
+        enterZoneCrossroads();
+        return;
+      }else if(input.equalsIgnoreCase("accept")){
+        System.out.println("You feel a sudden surge of energy as you accept the statue's will. Your vision blurs, and when it clears, you find yourself outside the cave, a new sense of purpose burning within you. You are now an apostle of the statue.\n");
+        ourHero.setClass("Apostle");
+        ourHero.setHealth(ourHero.getHealth() + 20);
+        ourHero.setDamage(ourHero.getDamage() + 5);
+        ourHero.setDefense(ourHero.getDefense() + 2);
+        enterZoneCrossroads();
+        return;
+    
+  }else{
+    
+    System.out.println("Invalid choice. Please type [resist] or [accept] : ");
+    input = inScanner.nextLine();
+    }
+  }
+}
+  }
+
+  private void enterZonePatron(){
+    System.out.println("You strike up a conversation with a few patrons. None of them are particularly interesting beyond the occasional tale-teller who says he's seen riches beyond comprehension or beasts the size of entire mountains, but you don't buy it.\nHowever, strangely enough, a man approaches you. He is old, but also real strong looking. He eyes you up and down before nodding.\n 'You. You're " + ourHero.getName() + ", right? Heh, you probably don't even know me after what happened to you. Last I heard, the ship you were on bound to the land of Javion had an intruder with nothing but a large scythe in hand. I thought nobody survived, but look at you...`` \n [question] to inquire about your origins\n [fight] in a fit of rage against this old man for lying to you.\n");
   }
   private void gameEnd()
   {

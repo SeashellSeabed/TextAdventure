@@ -38,19 +38,17 @@ public class Battle {
             double newPlayerHealth = player.getHealth() - enemyDamage; //new player health after attack
             player.setHealth(newPlayerHealth); //set player health to new health
 
-            System.out.println(enemy.getName() + " attacks " + player.getName() +
-                               " and deals " + enemyDamage +
-                               " damage, leaving " + player.getName() +
-                               " with " + player.getHealth() + " health.");
+            System.out.println(enemy.getName() + " attacks " + player.getName() +" and deals " + enemyDamage + " damage, leaving " + player.getName() +" with " + player.getHealth() + " health."); //information about what happened to the user
 
-            if (player.getHealth() <= 0) {
-                System.out.println(player.getName() + " has been defeated! You have died.");
-                break;
+            if (player.getHealth() <= 0) { //if the player health drops to zero
+                System.out.println(player.getName() + " has been defeated!"); //tell the player that they have been defeated
+                System.out.println("You now have" + player.getHealth() + " health left.");
+                break; //exit the loop
             }
 
-            System.out.println("-----------------------------------");
+            System.out.println("-----------------------------------"); //seperation line for readability
         }
 
-        System.out.println("Battle Over!");
+        System.out.println("Battle Over!"); //inform the end of a battle
     }
 }

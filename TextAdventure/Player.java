@@ -3,14 +3,14 @@ import java.util.*;
 public class Player
 {
   String name;
-  int health;
+  double health;
   double gold;
   int monstersDefeated;
   double damage;
   double defense;
   String playerClass;
 
-  public Player(String playerName, int startingHealth, double startingGold, double playerDamage, double playerDefense, String currentPlayerClass)
+  public Player(String playerName, double startingHealth, double startingGold, double playerDamage, double playerDefense, String currentPlayerClass)
   {
     name = playerName;
     health = startingHealth;
@@ -31,12 +31,12 @@ public class Player
     name = newName;
   }
 
-  public int getHealth()
+  public double getHealth()
   {
     return health;
   }
 
-  public void setHealth(int newHealth)
+  public void setHealth(double newHealth)
   {
     health = newHealth;
   }
@@ -63,6 +63,10 @@ public class Player
   public double getDamage()
   {
     return damage;
+  }
+  public void setDamage(double newDamage)
+  {
+    damage = newDamage;
   }
   public void enemy(double enemyHealth, double enemyDamage, String enemyClass)
   {
