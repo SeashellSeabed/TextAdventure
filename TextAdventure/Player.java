@@ -68,11 +68,8 @@ public class Player
   {
     damage = newDamage;
   }
-  public void enemy(double enemyHealth, double enemyDamage, String enemyClass)
-  {
-  
-  }
-  public String getClass(String TplayerClass)
+ 
+  public String getpClass()
   {
     return playerClass;
   }

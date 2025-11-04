@@ -14,7 +14,9 @@ public class Battle {
         return damage;
     }
 
-    public void startFight() { //main battle loop
+    public boolean startFight() { //main battle loop
+        double originalhealth = player.getHealth();
+        boolean victory = false;
         System.out.println("Battle Start: " + player.getName() + " vs " + enemy.getName()); //announcing battle information
         System.out.println("-----------------------------------"); //little line to make things look good
 
@@ -29,6 +31,7 @@ public class Battle {
 
             if (enemy.getHealth() <= 0) { //if the enemy health drops to zero
                 System.out.println(enemy.getName() + " has been defeated by " + player.getName() + "!"); //say the enemy has been defeated
+                victory = true; //say that the player has emerged victorious 
                 player.defeatMonster(); //increment the player's defeated monster count
                 break; //exit the loop
             }
@@ -50,5 +53,10 @@ public class Battle {
         }
 
         System.out.println("Battle Over!"); //inform the end of a battle
+
+        if(victory == true){
+            player.setHealth(originalhealth); //set the player health back to the original health that the fight started out with.
+        }
+        return victory; //return victory so this can be used to dictate the win or loss of a fight for the player
     }
 }

@@ -14,6 +14,7 @@ public class TextAdventure
   boolean blunderbuss = false;
   boolean apostle = false;
   boolean goneToCave = false;
+  boolean begged = false;
 
   public TextAdventure()
   {
@@ -177,8 +178,13 @@ public class TextAdventure
     enterTavern();
     return;
   }else if(input.equalsIgnoreCase("beg")){
+    if(begged != true){
       enterBegging();
       return;
+    }else{
+      System.out.println("You already went begging. Choose something else.");
+      input = inScanner.nextLine();
+    }
   }else{
     
     System.out.println("Invalid choice. Please type [shop], [tavern], or [beg] : ");
@@ -247,12 +253,107 @@ public class TextAdventure
   }
 
   private void enterShop(){
+    System.out.println("Welcome to the shop! You're going to need things to continue on your journey, so why not stock up here? For a price, of course...\n [Armor] - increases health by 50 (25G)\n [Sword] - sword that grants you 3 more damage and 10 more health. 20G \n [Dagger] that grants you 15 more damage, 15 less health and 5 less defense. (20G)\n[leave] to leave the shop.");
 
+    String input;
+    input =  inScanner.nextLine();
+
+    while(input != "armor" || input != "dagger" || input != "sword" || input != "leave"){
+
+      if(input.equalsIgnoreCase("armor")){
+        if(ourHero.getGold() >= 25){
+          System.out.println("Armor bought! Health increased by 50. Bonus! Defense increased by 5/");
+          
+          armor = true;
+          ourHero.setHealth(ourHero.getHealth() + 50);
+          ourHero.setDefense(ourHero.getDefense() + 5);
+          System.out.println("After buying your item, you look back at the shop to see what else there is to buy.");
+          ourHero.setGold(ourHero.getGold() - 25);
+          System.out.println("You now have " + ourHero.getGold() + "G");
+          enterShop();
+          return;
+          
+        }else{
+          System.out.println("You cannot buy this item! Pick something else.");
+          input = inScanner.nextLine();
+        }
+      } else if(input.equalsIgnoreCase("sword")){
+      
+      if (ourHero.getGold() >= 20){
+          System.out.println("Dagger bought! Damage increased by 15, health reduced by 15. Bonus! defense increase by 5.");
+          if(ourHero.getpClass() == "none"){
+            ourHero.setClass("Sword");
+
+          }
+          ourHero.setDamage(ourHero.getDamage() + 3);
+          ourHero.setHealth(ourHero.getHealth() + 10);
+          ourHero.setDefense(ourHero.getDefense() + 5);
+          System.out.println("After buying your item, you look back at the shop to see what else there is to buy.");
+          ourHero.setGold(ourHero.getGold() - 20);
+          System.out.println("You now have " + ourHero.getGold() + "G");
+          enterShop();
+          return;
+        }else{
+          System.out.println("You cannot buy this item! Pick something else.");
+          input = inScanner.nextLine();
+
+    }
+  }else if(input.equalsIgnoreCase("dagger")){
+
+    if (ourHero.getGold() >= 20){
+          System.out.println("Sword bought! Damage increased by 3, health increased by 10, defense reduced by 5.");
+          if(ourHero.getpClass() == "none"){
+            ourHero.setClass("Dagger");
+
+          }
+          ourHero.setDamage(ourHero.getDamage() + 15);
+          ourHero.setHealth(ourHero.getHealth() - 15);
+          ourHero.setDefense(ourHero.getDefense() - 5);
+          System.out.println("After buying your item, you look back at the shop to see what else there is to buy.");
+          ourHero.setGold(ourHero.getGold() - 20);
+          System.out.println("You now have " + ourHero.getGold() + "G");
+          enterShop();
+          return;
+        }else{
+          System.out.println("You cannot buy this item! Pick something else.");
+          input = inScanner.nextLine();
   }
+}else if(input.equalsIgnoreCase("leave")){
+  System.out.println("You decide there is no more for you here, and leave the shop.");
+  enterZoneTown();
+  return;
+
+}else{
+  System.out.println("This input is not valid! Please pick [armor], [sword], [dagger] or [leave].");
+  input= inScanner.nextLine();
+}
+  }
+}
 
   private void enterBegging(){
 
+    System.out.println("You sit down and beg for money. People pass by you like you're not even worth talking to... you probably aren't at this point. But then this extravagantly dressed man approaches you, placing a purse of 50 gold down on the ground.\n``I will make you an offer... you either take this purse and get out of here, or I give you stable money in exchange... for being my servant.\n[money] to take the money\n[servant]");
+    String input;
+    input = inScanner.nextLine();
+    while(input != "money" || input != "servant"){
+
+    if(input.equalsIgnoreCase("money")){
+      System.out.println("``Hmph. Guess I'll find my servant elsewhere.``\n The man leaves you with the sack of gold. You are now 50 gold richer!");
+      ourHero.setGold(ourHero.getGold() + 50);
+      begged = true;
+      System.out.println("You pick yourself up and go back into town.");
+      enterZoneTown();
+      return;
+    }else if(input.equalsIgnoreCase("servant")){
+      System.out.println("You follow the rich man over to his extravagent mansion. You'll be working here for the rest of your life, never knowing where it could've gone elsewhere. Maybe... it's not so bad.\n Game over.");
+      gameEnd();
+      return;
+    }else{
+      System.out.println("Invalid. Enter [money] or [servant].");
+      input = inScanner.nextLine();
+    }
   }
+}
 
   private void enterStatueOffer(){
     System.out.println("You approach the statue, feeling a strange warmth as you get closer. But that turns into a damp jolt of cold down your spine as a long laugh erupts around the room the moment you make content.\n ``Oh, how so long! How so long i've waited for someone, someone like you! Someone who nobody would see missing... You will be my apostle, apostle I say! You'll do as I bid and act as I please! Give yourself up now, traveller! \n[resist] to resist the statue's power\n[accept] dawn the statue's will as your own.\n");
@@ -288,7 +389,99 @@ public class TextAdventure
   }
 
   private void enterZonePatron(){
+    String input;
     System.out.println("You strike up a conversation with a few patrons. None of them are particularly interesting beyond the occasional tale-teller who says he's seen riches beyond comprehension or beasts the size of entire mountains, but you don't buy it.\nHowever, strangely enough, a man approaches you. He is old, but also real strong looking. He eyes you up and down before nodding.\n 'You. You're " + ourHero.getName() + ", right? Heh, you probably don't even know me after what happened to you. Last I heard, the ship you were on bound to the land of Javion had an intruder with nothing but a large scythe in hand. I thought nobody survived, but look at you...`` \n [question] to inquire about your origins\n [fight] in a fit of rage against this old man for lying to you.\n");
+    input = inScanner.nextLine();
+
+    while(input !="question" || input != "fight" || input != "question"){
+      if(input.equalsIgnoreCase("question")){
+        patronConverse();
+        return;
+
+      }else if(input.equalsIgnoreCase("fight")){
+        patronBattle();
+        return;
+
+      }else{
+        System.out.println("Invalid input. Please type [question] or [fight]\n");
+        input = inScanner.nextLine();
+      }
+
+
+    }
+    
+  }
+
+
+  private void patronConverse(){
+
+    System.out.println("I don't know the story exactly, but you were out on a voyage with the nation's army to conquer the kingdom of Javion. Things went great with the setting off ceremony, but around 5 hours after departure... any messanger pigeons we sent returned with nothing.``\nThe man sighed, handing you a map.\n``I'm old. I can't continue my journey to this place, but it has the answers you want. I know it will.``\nBefore you can say anything, the man gets up and leaves the tavern, never to be seen again.\n[follow] to follow the map\n[dont] to not follow the map?");
+    String input;
+    input = inScanner.nextLine();
+    while(input != "follow" || input != "dont"){
+
+      if(input.equalsIgnoreCase("follow")){
+        finale1();
+        return;
+      }else if(input.equalsIgnoreCase("dont")){
+        System.out.println("You think the old guy is crazy. You'll continue your life never knowing the truth.\nGame over.");
+        gameEnd();
+      }else{
+        System.out.println("Invalid statement. Please input [follow] or [dont].");
+        input = inScanner.nextLine();
+      }
+    }
+  }
+
+  private void patronBattle(){
+    System.out.println("You dare fight me? Fine, have it your way.");
+
+    Enemy oldDude = new Enemy("Tavern-goer", 100, 10, 20, "Drunkard");
+    Battle oldDudeFight = new Battle(ourHero, oldDude);
+    System.out.println("The Tavern-goer is going to battle. Ready?\n[yes]\n");
+    String input = inScanner.nextLine();
+
+    while(input != "yes"){
+
+    
+
+    if(input.equalsIgnoreCase("yes")){
+
+      boolean victory = oldDudeFight.startFight();
+    
+
+    if(victory == true){
+      System.out.println("Alright, alright! You win, just take some of this and... and hear me out.");
+      System.out.println("You gained 5 damage!");
+      ourHero.setDamage(ourHero.getDamage() + 5);
+      patronConverse();
+      return;
+    }else{
+      System.out.println("You have died. Game over! The tavern-goer kills you in your fight for... no reason, really.");
+      gameEnd();
+      return;
+    }
+
+    }else{
+      System.out.println("You must say [yes], there is no other choice for you now.");
+      input = inScanner.nextLine();
+    }
+  }
+}
+
+  private void finale1(){
+    console.setImage("distantcity.jpg");
+
+    System.out.println("You spend the next couple months travelling according to the map. It took you everywhere around this world, but it finally ended up at a city covered in old blood, ashes and ruin. you see someone. The man holding the scythe, who was covered in his own blood.\nHe stood atop what appeared to be a black as night shadow, grotesque and unshaply in form. What was true, however, is that Hyperion had just fought it. And killed it. And he's noticed you, too.\n ``You... I thought you died! Hah, I should've been more thorough, throwing you overboard for nothing. Well, whatever. Guess you'll just die right here!``");
+    System.out.println("There are no options to make. You fight.");
+
+    Enemy Hyperion = new Enemy("Hyperion", 9999, 999, 999, "Quantum Scythe");
+    Battle finalBout = new Battle (ourHero, Hyperion);
+
+
+    System.out.println("It doesn't matter. You died in the end, and there was no way to stop that monster, Hyperion. Perhaps it would've been better if you just... stayed away from your own fate.\nTrue ending; Hyperion. Game over! You 'won'");
+    gameEnd();
+
   }
   private void gameEnd()
   {
